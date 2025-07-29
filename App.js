@@ -15,17 +15,12 @@ import ChatInput from "./src/components/ChatInput";
 import ParticipantsList from "./src/components/ParticipantsList";
 
 function App() {
+  console.log("App component rendered!");
   const loading = useChatStore((state) => state.loading);
   const error = useChatStore((state) => state.error);
 
   useEffect(() => {
-    const unsubscribe = useChatStore.persist.onFinishHydration(() => {
-      useChatStore.getState().actions.initialize();
-    });
-
-    return () => {
-      unsubscribe();
-    };
+    useChatStore.getState().actions.initialize();
   }, []);
 
   if (loading) {

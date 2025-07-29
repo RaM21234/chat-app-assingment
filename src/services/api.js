@@ -2,14 +2,17 @@ const BASE_URL = 'https://dummy-chat-server.tribechat.com/api';
 
 const handleResponse = async (response) => {
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`API Error: ${response.status} ${error}`);
+    const errorText = await response.text();
+    console.error(`API Error: ${response.status} - ${errorText}`);
+    throw new Error(`API Error: ${response.status} ${errorText}`);
   }
   return response.json();
 };
 
 export const getInfo = async () => {
+  console.log("API: Fetching info from", `${BASE_URL}/info`);
   const response = await fetch(`${BASE_URL}/info`);
+  console.log("API: Info response - OK:", response.ok, "Status:", response.status);
   return handleResponse(response);
 };
 
@@ -20,7 +23,9 @@ export const getMessages = async ({ type = 'latest', refMessageId = '' }) => {
   } else if (type === 'older' && refMessageId) {
     url = `${BASE_URL}/messages/older/${refMessageId}`;
   }
+  console.log("API: Fetching messages from", url);
   const response = await fetch(url);
+  console.log("API: Messages response - OK:", response.ok, "Status:", response.status);
   return handleResponse(response);
 };
 

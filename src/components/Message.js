@@ -13,6 +13,7 @@ import { useChatStore } from "../store/chatStore";
 import AttachmentImage from "./AttachmentImage";
 
 const Message = ({ message, participant, showHeader, groupPosition }) => {
+  const participantsByUuid = useChatStore((state) => state.participantsByUuid);
   const isYou = participant.uuid === "you";
   const hasReactions = message.reactions && message.reactions.length > 0;
   const [isReactionsSheetVisible, setReactionsSheetVisible] = useState(false);
